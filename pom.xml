@@ -16,6 +16,14 @@
         <library.junit.version>5.9.2</library.junit.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/math-health/mhef-library-maven</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <!-- JUnit 5 -->
 
