@@ -34,7 +34,6 @@ jobs:
         #id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          #files: target/maven-0.0.9.jar
-          files: ${{ steps.jar.outputs.jar_file }}
+          files: ${{ steps.jar.outputs.jar_file }} # target/maven-0.0.1.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
