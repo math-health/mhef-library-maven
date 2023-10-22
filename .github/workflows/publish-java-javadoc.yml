@@ -36,7 +36,7 @@ jobs:
         # Set up Git with the PAT secret
         git config --global credential.username ${{ secrets.GITHUB_ACTOR }}
         git config --global credential.helper store
-        echo "machine github.com login ${{ secrets.GH_TOKEN }}" > ~/.netrc
+        echo "machine github.com login ${{ secrets.GITHUB_ACTOR }}" > ~/.netrc
         
         # Checkout the gh-pages branch
         git checkout --orphan gh-pages
