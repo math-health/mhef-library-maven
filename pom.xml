@@ -4,9 +4,9 @@
     <groupId>com.mhef.library</groupId>
     <artifactId>maven</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>maven</name>
-    <url>http://maven.apache.org</url>
+    <url>https://github.com/math-health/mhef-library-maven</url>
 
     <properties>
         <java.compiler.source>8</java.compiler.source>
