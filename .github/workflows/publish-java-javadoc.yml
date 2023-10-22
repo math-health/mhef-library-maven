@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: 11  # You can adjust the Java version as needed
+        distribution: 'adopt'
 
     - name: Build and generate Javadoc with Maven
       run: |
