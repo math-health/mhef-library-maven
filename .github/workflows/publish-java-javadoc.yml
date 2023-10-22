@@ -16,7 +16,7 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v2
       with:
-        java-version: 8  # You can adjust the Java version as needed
+        java-version: 11  # You can adjust the Java version as needed
 
     - name: Build and generate Javadoc with Maven
       run: |
