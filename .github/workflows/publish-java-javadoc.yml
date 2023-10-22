@@ -1,19 +1,52 @@
-name: Deploy Javadoc
+name: Deploy Javadoc to GitHub Pages
 
 on:
   push:
     branches:
-      - master
-      - main
+      - main  # Replace with your main branch name
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Deploy JavaDoc 🚀
-        uses: MathieuSoysal/Javadoc-publisher.yml@v2.3.0
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          javadoc-branch: javadoc
-          java-version: 17
-          target-folder: javadoc
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: 8  # You can adjust the Java version as needed
+
+    - name: Build and generate Javadoc with Maven
+      run: |
+        mvn clean package javadoc:javadoc
+        # Adjust the Maven goals as needed
+
+    - name: Deploy Javadoc to GitHub Pages
+      run: |
+        git config --global user.email "henrikbeck95@gmail.com"
+        git config --global user.name "Henrik Beck"
+        
+        # Checkout the gh-pages branch
+        git checkout --orphan gh-pages
+        
+        # Remove all existing files
+        git rm -rf .
+        
+        # Copy the generated Javadoc into the repository
+        cp -r ./target/site/apidocs/* .
+        # Adjust the path to your generated Javadoc directory
+        
+        # Commit the changes
+        git add .
+        git commit -m "Update Javadoc"
+        
+        # Push the changes to the gh-pages branch
+        git push origin gh-pages
+
+    - name: Cleanup
+      run: |
+        # Switch back to the main branch
+        git checkout main
+      if: success()
