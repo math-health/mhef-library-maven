@@ -30,8 +30,13 @@ jobs:
 
     - name: Deploy Javadoc to GitHub Pages
       run: |
-        git config --global user.email "henrikbeck95@gmail.com"
-        git config --global user.name "Henrik Beck"
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
+        
+        # Set up Git with the PAT secret
+        git config --global credential.username ${{ secrets.GITHUB_ACTOR }}
+        git config --global credential.helper store
+        echo "machine github.com login ${{ secrets.GH_TOKEN }}" > ~/.netrc
         
         # Checkout the gh-pages branch
         git checkout --orphan gh-pages
