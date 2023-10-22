@@ -24,14 +24,12 @@ jobs:
         distribution: 'adopt'
 
     - name: Build and generate Javadoc with Maven
-      run: |
-        mvn clean package javadoc:javadoc
-        # Adjust the Maven goals as needed
+      run: mvn clean package javadoc:javadoc
 
     - name: Deploy Javadoc to GitHub Pages
       run: |
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
+        git config --global user.email "henrikbeck95@gmail.com"
+        git config --global user.name "Henrik Beck"
         
         # Set up Git with the PAT secret
         git config --global credential.username ${{ secrets.GITHUB_ACTOR }}
