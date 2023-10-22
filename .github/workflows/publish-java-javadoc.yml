@@ -34,10 +34,11 @@ jobs:
         # Set up Git with the PAT secret
         git config --global credential.username ${{ secrets.GITHUB_ACTOR }}
         git config --global credential.helper store
-        echo "machine github.com login ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
+        echo "machine github.com login ${{ secrets.GITHUB_ACTOR }} password ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
         
-        # Checkout the gh-pages branch
-        git checkout --orphan gh-pages
+        # Checkout the gh-pages branch or create it if it doesn't exist
+        git fetch
+        git checkout gh-pages || git checkout --orphan gh-pages
         
         # Remove all existing files
         git rm -rf .
@@ -57,4 +58,3 @@ jobs:
       run: |
         # Switch back to the main branch
         git checkout main
-      if: success()
