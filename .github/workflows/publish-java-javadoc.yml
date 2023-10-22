@@ -1,60 +1,22 @@
-name: Deploy Javadoc to GitHub Pages
+name: Deploy Javadoc
 
 on:
   push:
     branches:
-      - main  # Replace with your main branch name
+      - master
+      - main
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: 11  # You can adjust the Java version as needed
-        distribution: 'adopt'
-
-    - name: Build and generate Javadoc with Maven
-      run: mvn clean package javadoc:javadoc
-
-    - name: Deploy Javadoc to GitHub Pages
-      run: |
-        git config --global user.email "henrikbeck95@gmail.com"
-        git config --global user.name "Henrik Beck"
-        
-        # Set up Git with the PAT secret
-        git config --global credential.username ${{ secrets.GITHUB_ACTOR }}
-        git config --global credential.helper store
-        echo "machine github.com login ${{ secrets.GITHUB_ACTOR }} password ${{ secrets.GITHUB_TOKEN }}" > ~/.netrc
-        
-        # Checkout the gh-pages branch or create it if it doesn't exist
-        git fetch
-        git checkout gh-pages || git checkout --orphan gh-pages
-        
-        # Remove all existing files
-        git rm -rf .
-        
-        # Copy the generated Javadoc into the repository
-        cp -r ./target/site/apidocs/* .
-        # Adjust the path to your generated Javadoc directory
-        
-        # Commit the changes
-        git add .
-        git commit -m "Update Javadoc"
-        
-        # Push the changes to the gh-pages branch
-        git push origin gh-pages
-
-    - name: Cleanup
-      run: |
-        # Switch back to the main branch
-        git checkout main
+      - name: Deploy JavaDoc 🚀
+        uses: MathieuSoysal/Javadoc-publisher.yml@v2.4.0
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          javadoc-branch: javadoc
+          java-version: 17
+          target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
+          project: maven # or gradle
+          # subdirectories: moduleA moduleB #for subdirectories support, needs to be run with custom command
+          # custom-command: javadoc -d javadoc -sourcepath src/main/java -subpackages .
